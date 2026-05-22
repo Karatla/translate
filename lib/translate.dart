@@ -1,8 +1,9 @@
-
 import 'translate_platform_interface.dart';
 
 class Translate {
-  Future<String?> getPlatformVersion() {
-    return TranslatePlatform.instance.getPlatformVersion();
+  const Translate._();
+
+  static Future<void> translateText(String text) {
+    return TranslatePlatform.instance.translateText(text);
   }
 }

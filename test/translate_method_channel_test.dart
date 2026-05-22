@@ -5,13 +5,16 @@ import 'package:translate/translate_method_channel.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelTranslate platform = MethodChannelTranslate();
-  const MethodChannel channel = MethodChannel('translate');
+  final platform = MethodChannelTranslate();
+  const channel = MethodChannel('translate');
+  MethodCall? capturedCall;
 
   setUp(() {
+    capturedCall = null;
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
-          return '42';
+        .setMockMethodCallHandler(channel, (methodCall) async {
+          capturedCall = methodCall;
+          return null;
         });
   });
 
@@ -20,7 +23,10 @@ void main() {
         .setMockMethodCallHandler(channel, null);
   });
 
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
+  test('translateText invokes method channel', () async {
+    await platform.translateText(' dat ');
+
+    expect(capturedCall?.method, 'translateText');
+    expect(capturedCall?.arguments, {'text': 'dat'});
   });
 }

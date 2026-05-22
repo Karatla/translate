@@ -23,7 +23,7 @@ abstract class TranslatePlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<void> translateText(String text) {
+    throw UnimplementedError('translateText() has not been implemented.');
   }
 }

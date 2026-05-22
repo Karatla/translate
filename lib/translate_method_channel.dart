@@ -10,10 +10,10 @@ class MethodChannelTranslate extends TranslatePlatform {
   final methodChannel = const MethodChannel('translate');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>(
-      'getPlatformVersion',
-    );
-    return version;
+  Future<void> translateText(String text) async {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return;
+
+    await methodChannel.invokeMethod<void>('translateText', {'text': trimmed});
   }
 }
